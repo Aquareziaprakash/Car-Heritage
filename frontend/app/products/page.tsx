@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import axios from 'axios'
 import { motion } from 'framer-motion'
 import api from '@/lib/api'
 
@@ -152,7 +151,3 @@ export default function ProductsPage() {
     </main>
   )
 }
-
-
-
-

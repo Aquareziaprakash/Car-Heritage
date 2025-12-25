@@ -66,3 +66,4 @@ After setting the environment variable, you can verify it's working by:
 - Check if the backend is running and healthy
 - Test the backend URL directly in a browser or with curl
 
+

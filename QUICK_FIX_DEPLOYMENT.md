@@ -82,3 +82,4 @@ Check the browser console (F12) for detailed error messages. The new code will s
 - Detailed connection errors
 - Whether the environment variable is set
 
+
