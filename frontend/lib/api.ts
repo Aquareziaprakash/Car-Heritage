@@ -43,7 +43,7 @@ api.interceptors.request.use((config) => {
   
   // Log API URL in development
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-    console.log('API Request:', config.baseURL + config.url)
+    console.log('API Request:', (config.baseURL || '') + config.url)
   }
   
   return config
