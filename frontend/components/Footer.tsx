@@ -69,7 +69,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
+            <h3 className="text-white font-semibold mb-4 text-sm sm:text-base">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <FaMapMarkerAlt className="text-primary-red mt-1" />
@@ -91,7 +91,7 @@ const Footer = () => {
 
           {/* Working Hours */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Working Hours</h3>
+            <h3 className="text-white font-semibold mb-4 text-sm sm:text-base">Working Hours</h3>
             <ul className="space-y-2 text-gray-400 text-sm">
               <li>Monday - Friday: 8:00 AM - 7:00 PM</li>
               <li>Saturday: 9:00 AM - 6:00 PM</li>
@@ -111,6 +111,7 @@ const Footer = () => {
 }
 
 export default Footer
+
 
 
 

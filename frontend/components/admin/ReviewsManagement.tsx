@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import { FaStar } from 'react-icons/fa'
 
@@ -27,14 +27,8 @@ const ReviewsManagement = ({ onUpdate }: ReviewsManagementProps) => {
 
   const fetchReviews = async () => {
     try {
-      const token = localStorage.getItem('adminToken')
-      const response = await axios.get('http://localhost:5000/api/reviews?approved=false', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
       // Get all reviews for admin view
-      const allResponse = await axios.get('http://localhost:5000/api/reviews', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const allResponse = await api.get('/api/reviews')
       setReviews(allResponse.data)
     } catch (error) {
       toast.error('Failed to fetch reviews')
@@ -43,11 +37,9 @@ const ReviewsManagement = ({ onUpdate }: ReviewsManagementProps) => {
 
   const handleApprove = async (id: string) => {
     try {
-      const token = localStorage.getItem('adminToken')
-      await axios.put(
-        `http://localhost:5000/api/reviews/${id}`,
-        { approved: true },
-        { headers: { Authorization: `Bearer ${token}` } }
+      await api.put(
+        `/api/reviews/${id}`,
+        { approved: true }
       )
       toast.success('Review approved')
       fetchReviews()
@@ -61,10 +53,7 @@ const ReviewsManagement = ({ onUpdate }: ReviewsManagementProps) => {
     if (!confirm('Are you sure you want to delete this review?')) return
 
     try {
-      const token = localStorage.getItem('adminToken')
-      await axios.delete(`http://localhost:5000/api/reviews/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await api.delete(`/api/reviews/${id}`)
       toast.success('Review deleted successfully')
       fetchReviews()
       onUpdate()
@@ -174,6 +163,7 @@ const ReviewsManagement = ({ onUpdate }: ReviewsManagementProps) => {
 }
 
 export default ReviewsManagement
+
 
 
 

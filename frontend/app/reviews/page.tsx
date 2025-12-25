@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import axios from 'axios'
+import api from '@/lib/api'
 import { motion } from 'framer-motion'
 import { FaStar } from 'react-icons/fa'
 import toast from 'react-hot-toast'
@@ -29,8 +29,8 @@ export default function ReviewsPage() {
     const fetchData = async () => {
       try {
         const [reviewsRes, statsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/reviews'),
-          axios.get('http://localhost:5000/api/reviews/stats/average'),
+          api.get('/api/reviews'),
+          api.get('/api/reviews/stats/average'),
         ])
         setReviews(reviewsRes.data)
         setAverageRating(statsRes.data)
@@ -46,11 +46,11 @@ export default function ReviewsPage() {
     setSubmitting(true)
 
     try {
-      await axios.post('http://localhost:5000/api/reviews', formData)
+      await api.post('/api/reviews', formData)
       toast.success('Review submitted! It will be reviewed before publishing.')
       setFormData({ name: '', rating: 5, description: '' })
       // Refresh reviews
-      const response = await axios.get('http://localhost:5000/api/reviews')
+      const response = await api.get('/api/reviews')
       setReviews(response.data)
     } catch (error) {
       toast.error('Failed to submit review. Please try again.')
@@ -69,19 +69,19 @@ export default function ReviewsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-5xl font-bold text-white mb-4">Customer Reviews</h1>
-            <div className="flex items-center justify-center gap-4 mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Customer Reviews</h1>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-4">
               <div className="flex items-center gap-2">
-                <FaStar className="text-yellow-400 text-2xl" />
-                <span className="text-2xl font-bold text-white">
+                <FaStar className="text-yellow-400 text-xl sm:text-2xl" />
+                <span className="text-xl sm:text-2xl font-bold text-white">
                   {averageRating.average}
                 </span>
               </div>
-              <span className="text-gray-400">
+              <span className="text-gray-400 text-sm sm:text-base">
                 ({averageRating.count} {averageRating.count === 1 ? 'review' : 'reviews'})
               </span>
             </div>
-            <p className="text-xl text-gray-400">
+            <p className="text-base sm:text-lg md:text-xl text-gray-400">
               Share your experience with Car Heritage
             </p>
           </motion.div>
@@ -91,9 +91,9 @@ export default function ReviewsPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-primary-metallic p-8 rounded-lg border border-primary-red/20 mb-12 max-w-2xl mx-auto"
+            className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20 mb-8 md:mb-12 max-w-2xl mx-auto"
           >
-            <h2 className="text-2xl font-bold text-white mb-6">Write a Review</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">Write a Review</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-gray-300 mb-2">Your Name</label>
@@ -147,7 +147,7 @@ export default function ReviewsPage() {
           </motion.div>
 
           {/* Reviews List */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {reviews.length > 0 ? (
               reviews.map((review, index) => (
                 <motion.div
@@ -156,20 +156,20 @@ export default function ReviewsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-primary-metallic p-6 rounded-lg border border-primary-red/20"
+                  className="bg-primary-metallic p-4 sm:p-6 rounded-lg border border-primary-red/20"
                 >
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-3 sm:mb-4">
                     {[...Array(5)].map((_, i) => (
                       <FaStar
                         key={i}
-                        className={
+                        className={`text-sm sm:text-base ${
                           i < review.rating ? 'text-yellow-400' : 'text-gray-600'
-                        }
+                        }`}
                       />
                     ))}
                   </div>
-                  <p className="text-gray-300 mb-4">{review.description}</p>
-                  <p className="text-primary-red font-semibold">— {review.name}</p>
+                  <p className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">{review.description}</p>
+                  <p className="text-primary-red font-semibold text-sm sm:text-base">— {review.name}</p>
                 </motion.div>
               ))
             ) : (
@@ -184,6 +184,7 @@ export default function ReviewsPage() {
     </main>
   )
 }
+
 
 
 

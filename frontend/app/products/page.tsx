@@ -25,7 +25,7 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products')
+        const response = await api.get('/api/products')
         setProducts(response.data)
         setFilteredProducts(response.data)
       } catch (error) {
@@ -61,19 +61,19 @@ export default function ProductsPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-5xl font-bold text-white mb-4">Our Products</h1>
-            <p className="text-xl text-gray-400">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Our Products</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-400">
               Premium car accessories, tools, and care products
             </p>
           </motion.div>
 
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-4 justify-center mb-12">
+          <div className="flex flex-wrap gap-3 sm:gap-4 justify-center mb-8 md:mb-12 px-4">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-lg transition-colors capitalize ${
+                className={`px-4 sm:px-6 py-2 rounded-lg transition-colors capitalize text-sm sm:text-base ${
                   selectedCategory === category
                     ? 'bg-primary-red text-white'
                     : 'bg-primary-metallic text-gray-300 hover:bg-primary-red/20'
@@ -87,7 +87,7 @@ export default function ProductsPage() {
           {loading ? (
             <div className="text-center text-gray-400 py-12">Loading...</div>
           ) : filteredProducts.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {filteredProducts.map((product, index) => (
                 <motion.div
                   key={product._id}
@@ -115,19 +115,19 @@ export default function ProductsPage() {
                       </div>
                     )}
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold text-white mb-2">{product.name}</h3>
-                    <p className="text-gray-400 text-sm mb-3 line-clamp-2">
+                  <div className="p-3 sm:p-4">
+                    <h3 className="text-base sm:text-lg font-bold text-white mb-2">{product.name}</h3>
+                    <p className="text-gray-400 text-xs sm:text-sm mb-3 line-clamp-2">
                       {product.description}
                     </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-primary-red font-bold text-xl">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                      <span className="text-primary-red font-bold text-lg sm:text-xl">
                         ${product.price.toFixed(2)}
                       </span>
                       <button
                         onClick={() => handleInquire(product)}
                         disabled={!product.inStock}
-                        className={`px-4 py-2 rounded-lg font-semibold text-sm transition-colors ${
+                        className={`w-full sm:w-auto px-3 sm:px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm transition-colors ${
                           product.inStock
                             ? 'bg-primary-red hover:bg-primary-red-dark text-white'
                             : 'bg-gray-600 text-gray-400 cursor-not-allowed'
@@ -151,6 +151,7 @@ export default function ProductsPage() {
     </main>
   )
 }
+
 
 
 

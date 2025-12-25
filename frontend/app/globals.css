@@ -15,6 +15,15 @@ body {
   background-color: #0a0a0a;
   color: #ffffff;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile viewport fix */
+@supports (-webkit-touch-callout: none) {
+  body {
+    min-height: -webkit-fill-available;
+  }
 }
 
 html {
@@ -54,6 +63,7 @@ html {
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out;
 }
+
 
 
 

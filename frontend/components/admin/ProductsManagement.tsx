@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '@/lib/api'
 import toast from 'react-hot-toast'
 
 interface Product {
@@ -37,10 +37,7 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
 
   const fetchProducts = async () => {
     try {
-      const token = localStorage.getItem('adminToken')
-      const response = await axios.get('http://localhost:5000/api/products', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const response = await api.get('/api/products')
       setProducts(response.data)
     } catch (error) {
       toast.error('Failed to fetch products')
@@ -50,18 +47,14 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const token = localStorage.getItem('adminToken')
       if (editingProduct) {
-        await axios.put(
-          `http://localhost:5000/api/products/${editingProduct._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
+        await api.put(
+          `/api/products/${editingProduct._id}`,
+          formData
         )
         toast.success('Product updated successfully')
       } else {
-        await axios.post('http://localhost:5000/api/products', formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        await api.post('/api/products', formData)
         toast.success('Product created successfully')
       }
       fetchProducts()
@@ -89,10 +82,7 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
     if (!confirm('Are you sure you want to delete this product?')) return
 
     try {
-      const token = localStorage.getItem('adminToken')
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await api.delete(`/api/products/${id}`)
       toast.success('Product deleted successfully')
       fetchProducts()
       onUpdate()
@@ -253,6 +243,7 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
 }
 
 export default ProductsManagement
+
 
 
 

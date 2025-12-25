@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '@/lib/api'
 import toast from 'react-hot-toast'
 
 interface AboutData {
@@ -38,10 +38,7 @@ const AboutManagement = () => {
 
   const fetchAbout = async () => {
     try {
-      const token = localStorage.getItem('adminToken')
-      const response = await axios.get('http://localhost:5000/api/about', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const response = await api.get('/api/about')
       setFormData(response.data)
     } catch (error) {
       toast.error('Failed to fetch about data')
@@ -53,10 +50,7 @@ const AboutManagement = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const token = localStorage.getItem('adminToken')
-      await axios.put('http://localhost:5000/api/about', formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await api.put('/api/about', formData)
       toast.success('About information updated successfully')
     } catch (error) {
       toast.error('Failed to update about information')
@@ -184,6 +178,7 @@ const AboutManagement = () => {
 }
 
 export default AboutManagement
+
 
 
 

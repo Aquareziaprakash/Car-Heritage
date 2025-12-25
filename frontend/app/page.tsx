@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import ReviewsPreview from '@/components/ReviewsPreview'
 import Footer from '@/components/Footer'
-import axios from 'axios'
+import api from '@/lib/api'
 
 export default function Home() {
   const [reviews, setReviews] = useState([])
@@ -13,7 +13,7 @@ export default function Home() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/reviews?limit=3')
+        const response = await api.get('/api/reviews?limit=3')
         setReviews(response.data)
       } catch (error) {
         console.error('Error fetching reviews:', error)
@@ -31,6 +31,7 @@ export default function Home() {
     </main>
   )
 }
+
 
 
 

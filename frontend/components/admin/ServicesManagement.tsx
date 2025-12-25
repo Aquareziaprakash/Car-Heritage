@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '@/lib/api'
 import toast from 'react-hot-toast'
 
 interface Service {
@@ -33,10 +33,7 @@ const ServicesManagement = ({ onUpdate }: ServicesManagementProps) => {
 
   const fetchServices = async () => {
     try {
-      const token = localStorage.getItem('adminToken')
-      const response = await axios.get('http://localhost:5000/api/services', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const response = await api.get('/api/services')
       setServices(response.data)
     } catch (error) {
       toast.error('Failed to fetch services')
@@ -46,18 +43,14 @@ const ServicesManagement = ({ onUpdate }: ServicesManagementProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const token = localStorage.getItem('adminToken')
       if (editingService) {
-        await axios.put(
-          `http://localhost:5000/api/services/${editingService._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
+        await api.put(
+          `/api/services/${editingService._id}`,
+          formData
         )
         toast.success('Service updated successfully')
       } else {
-        await axios.post('http://localhost:5000/api/services', formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        await api.post('/api/services', formData)
         toast.success('Service created successfully')
       }
       fetchServices()
@@ -83,10 +76,7 @@ const ServicesManagement = ({ onUpdate }: ServicesManagementProps) => {
     if (!confirm('Are you sure you want to delete this service?')) return
 
     try {
-      const token = localStorage.getItem('adminToken')
-      await axios.delete(`http://localhost:5000/api/services/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await api.delete(`/api/services/${id}`)
       toast.success('Service deleted successfully')
       fetchServices()
       onUpdate()
@@ -214,6 +204,7 @@ const ServicesManagement = ({ onUpdate }: ServicesManagementProps) => {
 }
 
 export default ServicesManagement
+
 
 
 

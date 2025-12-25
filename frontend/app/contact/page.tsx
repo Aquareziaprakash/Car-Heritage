@@ -106,9 +106,9 @@ export default function ContactPage() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-primary-metallic p-8 rounded-lg border border-primary-red/20"
+              className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20"
             >
-              <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">Send us a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-gray-300 mb-2">Name</label>
@@ -165,6 +165,7 @@ export default function ContactPage() {
     </main>
   )
 }
+
 
 
 

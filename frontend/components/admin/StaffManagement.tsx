@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '@/lib/api'
 import toast from 'react-hot-toast'
 
 interface Staff {
@@ -33,10 +33,7 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
 
   const fetchStaff = async () => {
     try {
-      const token = localStorage.getItem('adminToken')
-      const response = await axios.get('http://localhost:5000/api/staff', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      const response = await api.get('/api/staff')
       setStaff(response.data)
     } catch (error) {
       toast.error('Failed to fetch staff')
@@ -46,18 +43,14 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const token = localStorage.getItem('adminToken')
       if (editingStaff) {
-        await axios.put(
-          `http://localhost:5000/api/staff/${editingStaff._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
+        await api.put(
+          `/api/staff/${editingStaff._id}`,
+          formData
         )
         toast.success('Staff member updated successfully')
       } else {
-        await axios.post('http://localhost:5000/api/staff', formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        await api.post('/api/staff', formData)
         toast.success('Staff member created successfully')
       }
       fetchStaff()
@@ -83,10 +76,7 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
     if (!confirm('Are you sure you want to delete this staff member?')) return
 
     try {
-      const token = localStorage.getItem('adminToken')
-      await axios.delete(`http://localhost:5000/api/staff/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      await api.delete(`/api/staff/${id}`)
       toast.success('Staff member deleted successfully')
       fetchStaff()
       onUpdate()
@@ -227,6 +217,7 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
 }
 
 export default StaffManagement
+
 
 
 

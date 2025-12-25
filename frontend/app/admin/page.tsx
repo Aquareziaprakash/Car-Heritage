@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
+import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import AdminDashboard from '@/components/admin/AdminDashboard'
 import AdminLogin from '@/components/admin/AdminLogin'
@@ -22,13 +22,9 @@ export default function AdminPage() {
 
   const handleLogin = async (username: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await api.post('/api/auth/login', {
         username: username.trim(),
         password: password.trim(),
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
       })
       
       if (response.data.token) {

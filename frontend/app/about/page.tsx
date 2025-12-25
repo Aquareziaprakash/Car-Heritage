@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import axios from 'axios'
+import api from '@/lib/api'
 import { motion } from 'framer-motion'
 
 interface AboutData {
@@ -26,7 +26,7 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchAbout = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/about')
+        const response = await api.get('/api/about')
         setAboutData(response.data)
       } catch (error) {
         console.error('Error fetching about data:', error)
@@ -56,8 +56,8 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl font-bold text-white mb-4">About Car Heritage</h1>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">About Car Heritage</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto px-4">
               Your trusted partner in premium automobile care and customization
             </p>
           </motion.div>
@@ -70,8 +70,8 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <h2 className="text-3xl font-bold text-white mb-6">Our Story</h2>
-              <div className="bg-primary-metallic p-8 rounded-lg border border-primary-red/20">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Our Story</h2>
+              <div className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20">
                 <p className="text-gray-300 leading-relaxed whitespace-pre-line">
                   {aboutData.companyHistory || 'Our company history will be displayed here.'}
                 </p>
@@ -80,15 +80,15 @@ export default function AboutPage() {
           )}
 
           {/* Mission, Vision, Values */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-12 md:mb-16">
             {aboutData?.mission && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-primary-metallic p-6 rounded-lg border border-primary-red/20"
+                className="bg-primary-metallic p-4 sm:p-6 rounded-lg border border-primary-red/20"
               >
-                <h3 className="text-2xl font-bold text-primary-red mb-4">Mission</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-primary-red mb-4">Mission</h3>
                 <p className="text-gray-300">{aboutData.mission}</p>
               </motion.div>
             )}
@@ -99,9 +99,9 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="bg-primary-metallic p-6 rounded-lg border border-primary-red/20"
+                className="bg-primary-metallic p-4 sm:p-6 rounded-lg border border-primary-red/20"
               >
-                <h3 className="text-2xl font-bold text-primary-red mb-4">Vision</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-primary-red mb-4">Vision</h3>
                 <p className="text-gray-300">{aboutData.vision}</p>
               </motion.div>
             )}
@@ -112,9 +112,9 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-primary-metallic p-6 rounded-lg border border-primary-red/20"
+                className="bg-primary-metallic p-4 sm:p-6 rounded-lg border border-primary-red/20"
               >
-                <h3 className="text-2xl font-bold text-primary-red mb-4">Values</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-primary-red mb-4">Values</h3>
                 <p className="text-gray-300">{aboutData.values}</p>
               </motion.div>
             )}
@@ -128,8 +128,8 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="mb-16"
             >
-              <h2 className="text-3xl font-bold text-white mb-6">Company Registration</h2>
-              <div className="bg-primary-metallic p-8 rounded-lg border border-primary-red/20">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Company Registration</h2>
+              <div className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20">
                 <img
                   src={aboutData.certificateImage}
                   alt="Company Certificate"
@@ -145,19 +145,19 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-primary-metallic p-8 rounded-lg border border-primary-red/20"
+              className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20"
             >
-              <h2 className="text-3xl font-bold text-white mb-6">From the Owner</h2>
-              <div className="flex flex-col md:flex-row gap-8 items-start">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">From the Owner</h2>
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
                 {aboutData.owner.photo && (
                   <img
                     src={aboutData.owner.photo}
                     alt={aboutData.owner.name}
-                    className="w-48 h-48 rounded-full object-cover border-4 border-primary-red"
+                    className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-primary-red mx-auto md:mx-0"
                   />
                 )}
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-primary-red mb-4">
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-xl sm:text-2xl font-bold text-primary-red mb-4">
                     {aboutData.owner.name || 'Owner Name'}
                   </h3>
                   <p className="text-gray-300 leading-relaxed whitespace-pre-line">
@@ -173,6 +173,7 @@ export default function AboutPage() {
     </main>
   )
 }
+
 
 
 

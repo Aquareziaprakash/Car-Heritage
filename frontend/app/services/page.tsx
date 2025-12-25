@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import axios from 'axios'
+import api from '@/lib/api'
 import { motion } from 'framer-motion'
 
 interface Service {
@@ -21,7 +21,7 @@ export default function ServicesPage() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/services')
+        const response = await api.get('/api/services')
         setServices(response.data)
       } catch (error) {
         console.error('Error fetching services:', error)
@@ -42,8 +42,8 @@ export default function ServicesPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-5xl font-bold text-white mb-4">Our Services</h1>
-            <p className="text-xl text-gray-400">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Our Services</h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-400">
               Premium automobile care and customization services
             </p>
           </motion.div>
@@ -51,7 +51,7 @@ export default function ServicesPage() {
           {loading ? (
             <div className="text-center text-gray-400 py-12">Loading...</div>
           ) : services.length > 0 ? (
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {services.map((service, index) => (
                 <motion.div
                   key={service._id}
@@ -81,9 +81,9 @@ export default function ServicesPage() {
                       </div>
                     )}
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-2xl font-bold text-white mb-3">{service.name}</h3>
-                    <p className="text-gray-300 leading-relaxed">{service.description}</p>
+                  <div className="p-4 sm:p-6">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">{service.name}</h3>
+                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">{service.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -99,6 +99,7 @@ export default function ServicesPage() {
     </main>
   )
 }
+
 
 
 

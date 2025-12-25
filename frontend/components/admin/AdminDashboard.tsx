@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import api from '@/lib/api'
 import toast from 'react-hot-toast'
 import ProductsManagement from './ProductsManagement'
 import ServicesManagement from './ServicesManagement'
@@ -28,14 +28,11 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
 
   const fetchStats = async () => {
     try {
-      const token = localStorage.getItem('adminToken')
-      const headers = { Authorization: `Bearer ${token}` }
-
       const [products, services, staff, reviews] = await Promise.all([
-        axios.get('http://localhost:5000/api/products', { headers }),
-        axios.get('http://localhost:5000/api/services', { headers }),
-        axios.get('http://localhost:5000/api/staff', { headers }),
-        axios.get('http://localhost:5000/api/reviews?approved=false', { headers }),
+        api.get('/api/products'),
+        api.get('/api/services'),
+        api.get('/api/staff'),
+        api.get('/api/reviews?approved=false'),
       ])
 
       setStats({
@@ -150,6 +147,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
 }
 
 export default AdminDashboard
+
 
 
 
