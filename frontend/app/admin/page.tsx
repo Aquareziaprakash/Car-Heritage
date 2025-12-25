@@ -23,7 +23,7 @@ export default function AdminPage() {
   const handleLogin = async (username: string, password: string) => {
     try {
       // Check if API URL is configured
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      const apiUrl = 'https://car-heritage-c58x.vercel.app/'
       if (!apiUrl && typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
         toast.error('API URL not configured. Please set NEXT_PUBLIC_API_URL environment variable.')
         console.error('NEXT_PUBLIC_API_URL is not set in production environment')
