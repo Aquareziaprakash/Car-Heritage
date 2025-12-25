@@ -22,6 +22,14 @@ export default function AdminPage() {
 
   const handleLogin = async (username: string, password: string) => {
     try {
+      // Check if API URL is configured
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      if (!apiUrl && typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        toast.error('API URL not configured. Please set NEXT_PUBLIC_API_URL environment variable.')
+        console.error('NEXT_PUBLIC_API_URL is not set in production environment')
+        return
+      }
+
       const response = await api.post('/api/auth/login', {
         username: username.trim(),
         password: password.trim(),
@@ -36,12 +44,19 @@ export default function AdminPage() {
       }
     } catch (error: any) {
       console.error('Login error:', error)
+      console.error('API Base URL:', api.defaults.baseURL)
+      
       if (error.response) {
         // Server responded with error
         toast.error(error.response.data?.message || 'Login failed')
       } else if (error.request) {
         // Request made but no response
-        toast.error('Cannot connect to server. Make sure the backend is running on port 5000.')
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || api.defaults.baseURL
+        if (apiUrl) {
+          toast.error(`Cannot connect to server at ${apiUrl}. Please check if the backend is running and accessible.`)
+        } else {
+          toast.error('API URL not configured. Please set NEXT_PUBLIC_API_URL environment variable in your deployment settings.')
+        }
       } else {
         // Something else happened
         toast.error('Login failed: ' + (error.message || 'Unknown error'))

@@ -45,8 +45,19 @@ vercel
 
 ### Step 3: Configure Environment Variables in Vercel
 
+**⚠️ IMPORTANT: This step is REQUIRED for the app to work in production!**
+
 In Vercel Dashboard → Project Settings → Environment Variables:
-- `NEXT_PUBLIC_API_URL` = Your backend API URL
+
+1. Click "Add New"
+2. Add the following variable:
+   - **Key**: `NEXT_PUBLIC_API_URL`
+   - **Value**: Your backend API URL (e.g., `https://your-backend.vercel.app` or `https://car-heritage-api.railway.app`)
+   - **Environment**: Select all (Production, Preview, Development) or at least Production
+3. Click "Save"
+4. **Redeploy your application** (the environment variable needs to be set before the build)
+
+**Without this variable, the app will try to connect to localhost:5000 and fail!**
 
 ---
 

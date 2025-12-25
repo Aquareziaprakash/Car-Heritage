@@ -1,29 +1,37 @@
 import axios from 'axios'
 
-// Get API URL from environment variable or use default
-const getApiUrl = () => {
+// Get base URL - Next.js exposes NEXT_PUBLIC_* vars at build time
+const getBaseURL = () => {
+  // Check environment variable first (set at build time)
   if (process.env.NEXT_PUBLIC_API_URL) {
     return process.env.NEXT_PUBLIC_API_URL
   }
   
-  // In browser, check if localhost
+  // In browser, check if localhost (for local development)
   if (typeof window !== 'undefined') {
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    const hostname = window.location.hostname
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
       return 'http://localhost:5000'
     }
   }
   
-  // Default fallback (should be set via env var in production)
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+  // Default fallback (should not happen in production if env var is set)
+  return process.env.NEXT_PUBLIC_API_URL || ''
 }
 
-const API_BASE_URL = getApiUrl()
+const baseURL = getBaseURL()
+
+// Log warning if API URL is not set in production
+if (typeof window !== 'undefined' && !baseURL && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+  console.error('⚠️ NEXT_PUBLIC_API_URL is not set! Please configure it in your deployment settings.')
+}
 
 export const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 15000, // 15 second timeout
 })
 
 // Add auth token to requests
@@ -32,11 +40,32 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  
+  // Log API URL in development
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+    console.log('API Request:', config.baseURL + config.url)
+  }
+  
   return config
 })
 
-// Export getApiUrl for direct URL construction if needed
-export { getApiUrl }
+// Response interceptor for better error handling
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Log detailed error in development
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+      console.error('API Error:', {
+        message: error.message,
+        url: error.config?.url,
+        baseURL: error.config?.baseURL,
+        fullURL: error.config?.baseURL + error.config?.url,
+        status: error.response?.status,
+      })
+    }
+    return Promise.reject(error)
+  }
+)
 
 export default api
 
