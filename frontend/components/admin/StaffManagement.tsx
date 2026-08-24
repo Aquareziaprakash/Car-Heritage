@@ -34,30 +34,40 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
   const fetchStaff = async () => {
     try {
       const response = await api.get('/api/staff')
-      setStaff(response.data)
+      setStaff(Array.isArray(response.data) ? response.data : [])
     } catch (error) {
-      toast.error('Failed to fetch staff')
+      toast.error(getErrorMessage(error, 'Failed to fetch staff'))
     }
+  }
+
+  const getErrorMessage = (error: unknown, fallback: string) => {
+    const axiosError = error as { response?: { data?: { message?: string } }; message?: string }
+    return axiosError.response?.data?.message || axiosError.message || fallback
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const payload = {
+      ...formData,
+      photo: formData.photo || '',
+    }
+    console.log('Staff payload:', payload)
     try {
       if (editingStaff) {
         await api.put(
           `/api/staff/${editingStaff._id}`,
-          formData
+          payload
         )
         toast.success('Staff member updated successfully')
       } else {
-        await api.post('/api/staff', formData)
+        await api.post('/api/staff', payload)
         toast.success('Staff member created successfully')
       }
       fetchStaff()
       onUpdate()
       resetForm()
     } catch (error) {
-      toast.error('Failed to save staff member')
+      toast.error(getErrorMessage(error, 'Failed to save staff member'))
     }
   }
 
@@ -81,7 +91,7 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
       fetchStaff()
       onUpdate()
     } catch (error) {
-      toast.error('Failed to delete staff member')
+      toast.error(getErrorMessage(error, 'Failed to delete staff member'))
     }
   }
 
@@ -154,7 +164,7 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
             <div>
               <label className="block text-gray-300 mb-2">Photo URL</label>
               <input
-                type="url"
+                type="text"
                 value={formData.photo}
                 onChange={(e) => setFormData({ ...formData, photo: e.target.value })}
                 className="w-full px-4 py-2 bg-primary-dark border border-primary-red/30 rounded-lg text-white focus:outline-none focus:border-primary-red"
@@ -180,7 +190,7 @@ const StaffManagement = ({ onUpdate }: StaffManagementProps) => {
       )}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {staff.map((member) => (
+        {(Array.isArray(staff) ? staff : []).map((member) => (
           <div
             key={member._id}
             className="bg-primary-metallic p-4 rounded-lg border border-primary-red/20"

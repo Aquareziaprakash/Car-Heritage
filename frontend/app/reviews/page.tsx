@@ -32,7 +32,7 @@ export default function ReviewsPage() {
           api.get('/api/reviews'),
           api.get('/api/reviews/stats/average'),
         ])
-        setReviews(reviewsRes.data)
+        setReviews(Array.isArray(reviewsRes.data) ? reviewsRes.data : [])
         setAverageRating(statsRes.data)
       } catch (error) {
         console.error('Error fetching reviews:', error)
@@ -45,15 +45,32 @@ export default function ReviewsPage() {
     e.preventDefault()
     setSubmitting(true)
 
+    const payload = {
+      name: formData.name.trim(),
+      rating: Number(formData.rating),
+      description: formData.description.trim(),
+    }
+    console.log('Review payload:', payload)
+
     try {
-      await api.post('/api/reviews', formData)
+      await api.post('/api/reviews', payload)
       toast.success('Review submitted! It will be reviewed before publishing.')
       setFormData({ name: '', rating: 5, description: '' })
-      // Refresh reviews
-      const response = await api.get('/api/reviews')
-      setReviews(response.data)
-    } catch (error) {
-      toast.error('Failed to submit review. Please try again.')
+      try {
+        const response = await api.get('/api/reviews')
+        setReviews(Array.isArray(response.data) ? response.data : [])
+      } catch (refreshError) {
+        console.error('Review saved but refresh failed:', refreshError)
+      }
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string; error?: string } }; message?: string }
+      const message =
+        axiosError.response?.data?.message ||
+        axiosError.response?.data?.error ||
+        axiosError.message ||
+        'Failed to submit review. Please try again.'
+      console.error('Review submit failed:', axiosError.response?.status, axiosError.response?.data)
+      toast.error(message)
     } finally {
       setSubmitting(false)
     }

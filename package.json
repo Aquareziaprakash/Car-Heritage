@@ -10,15 +10,18 @@
     "start": "cd frontend && npm start",
     "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
   },
-  "keywords": ["car", "automotive", "services"],
+  "keywords": [
+    "car",
+    "automotive",
+    "services"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@cloudinary/react": "^1.14.4",
+    "@cloudinary/url-gen": "^1.22.0"
   }
 }
-
-
-
-
-

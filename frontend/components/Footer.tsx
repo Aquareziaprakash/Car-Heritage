@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
+import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt, FaTiktok, FaMailBulk } from 'react-icons/fa'
 
 const Footer = () => {
   return (
@@ -17,20 +17,20 @@ const Footer = () => {
               <span className="text-white font-bold text-xl">Car Heritage</span>
             </div>
             <p className="text-gray-400 text-sm mb-4">
-              Premium automobile services - washing, detailing, customization, and more.
+              Car Heritage Enterprises Pvt. Ltd. — premium automobile services: washing, detailing, customization, and more.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary-red transition-colors">
+              <a href="https://www.facebook.com/p/Car-Heritage-Enterprises-61584665677244/" className="text-gray-400 hover:text-primary-red transition-colors">
                 <FaFacebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary-red transition-colors">
+              <a href="https://www.instagram.com/carheritage_enterprises/?hl=en" className="text-gray-400 hover:text-primary-red transition-colors">
                 <FaInstagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary-red transition-colors">
-                <FaTwitter className="w-5 h-5" />
+              <a href="https://www.tiktok.com/@santoshpathak864" className="text-gray-400 hover:text-primary-red transition-colors">
+                <FaTiktok className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-primary-red transition-colors">
-                <FaLinkedin className="w-5 h-5" />
+              <a href="+977 982-0092781" className="text-gray-400 hover:text-primary-red transition-colors">
+                <FaPhone className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -74,17 +74,17 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <FaMapMarkerAlt className="text-primary-red mt-1" />
                 <span className="text-gray-400 text-sm">
-                  123 Automotive Street<br />
-                  City, State 12345
+                  Kirtipur Municipality-6<br />
+                  Kathmandu, Nepal
                 </span>
               </li>
               <li className="flex items-center space-x-3">
                 <FaPhone className="text-primary-red" />
-                <span className="text-gray-400 text-sm">+1 (555) 123-4567</span>
+                <span className="text-gray-400 text-sm">+977 982-0092781</span>
               </li>
               <li className="flex items-center space-x-3">
                 <FaEnvelope className="text-primary-red" />
-                <span className="text-gray-400 text-sm">info@carheritage.com</span>
+                <span className="text-gray-400 text-sm">carheritagenepal12@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -102,7 +102,7 @@ const Footer = () => {
 
         <div className="border-t border-primary-metallic mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © {new Date().getFullYear()} Car Heritage. All rights reserved.
+            © {new Date().getFullYear()} Car Heritage Enterprises Pvt. Ltd. All rights reserved.
           </p>
         </div>
       </div>

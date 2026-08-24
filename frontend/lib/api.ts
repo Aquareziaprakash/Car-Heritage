@@ -2,18 +2,15 @@
 import axios from 'axios'
 
 const getBaseURL = () => {
-  // Prefer explicit environment variable (available on both server and client)
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL
+  const fromEnv = process.env.NEXT_PUBLIC_API_URL?.trim()
+  if (fromEnv) {
+    return fromEnv.replace(/\/+$/, '')
   }
 
-  // During local development fallback to localhost backend
   if (process.env.NODE_ENV === 'development') {
     return 'http://localhost:5000'
   }
 
-  // In production, prefer an explicit NEXT_PUBLIC_API_URL; leave empty to use
-  // relative URLs if that's intended by your deployment setup.
   return ''
 }
 

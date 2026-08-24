@@ -48,7 +48,7 @@ export default function ProductsPage() {
   const categories = ['all', ...Array.from(new Set(products.map((p) => p.category)))]
 
   const handleInquire = (product: Product) => {
-    window.location.href = `mailto:info@carheritage.com?subject=Inquiry about ${product.name}&body=Hello, I'm interested in ${product.name}. Please provide more information.`
+    window.location.href = `mailto:carheritagenepal12@gmail.com?subject=Inquiry about ${product.name}&body=Hello, I'm interested in ${product.name}. Please provide more information.`
   }
 
   return (

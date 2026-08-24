@@ -28,7 +28,7 @@ const ReviewsManagement = ({ onUpdate }: ReviewsManagementProps) => {
   const fetchReviews = async () => {
     try {
       // Get all reviews for admin view
-      const allResponse = await api.get('/api/reviews')
+      const allResponse = await api.get('/api/reviews?approved=false')
       setReviews(allResponse.data)
     } catch (error) {
       toast.error('Failed to fetch reviews')

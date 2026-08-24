@@ -38,30 +38,45 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
   const fetchProducts = async () => {
     try {
       const response = await api.get('/api/products')
-      setProducts(response.data)
+      setProducts(Array.isArray(response.data) ? response.data : [])
     } catch (error) {
-      toast.error('Failed to fetch products')
+      toast.error(getErrorMessage(error, 'Failed to fetch products'))
     }
+  }
+
+  const getErrorMessage = (error: unknown, fallback: string) => {
+    const axiosError = error as { response?: { data?: { message?: string } }; message?: string }
+    return axiosError.response?.data?.message || axiosError.message || fallback
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const payload = {
+      ...formData,
+      price: Number(formData.price),
+      image: formData.image || '',
+    }
+    console.log('Product payload:', payload)
+    if (Number.isNaN(payload.price)) {
+      toast.error('Price must be a valid number')
+      return
+    }
     try {
       if (editingProduct) {
         await api.put(
           `/api/products/${editingProduct._id}`,
-          formData
+          payload
         )
         toast.success('Product updated successfully')
       } else {
-        await api.post('/api/products', formData)
+        await api.post('/api/products', payload)
         toast.success('Product created successfully')
       }
       fetchProducts()
       onUpdate()
       resetForm()
     } catch (error) {
-      toast.error('Failed to save product')
+      toast.error(getErrorMessage(error, 'Failed to save product'))
     }
   }
 
@@ -87,7 +102,7 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
       fetchProducts()
       onUpdate()
     } catch (error) {
-      toast.error('Failed to delete product')
+      toast.error(getErrorMessage(error, 'Failed to delete product'))
     }
   }
 
@@ -171,7 +186,7 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
             <div>
               <label className="block text-gray-300 mb-2">Image URL</label>
               <input
-                type="url"
+                type="text"
                 value={formData.image}
                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                 className="w-full px-4 py-2 bg-primary-dark border border-primary-red/30 rounded-lg text-white focus:outline-none focus:border-primary-red"
@@ -206,7 +221,7 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
       )}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {products.map((product) => (
+        {(Array.isArray(products) ? products : []).map((product) => (
           <div
             key={product._id}
             className="bg-primary-metallic p-4 rounded-lg border border-primary-red/20"
@@ -220,7 +235,7 @@ const ProductsManagement = ({ onUpdate }: ProductsManagementProps) => {
             )}
             <h3 className="text-white font-bold mb-2">{product.name}</h3>
             <p className="text-gray-400 text-sm mb-2 line-clamp-2">{product.description}</p>
-            <p className="text-primary-red font-bold mb-4">${product.price.toFixed(2)}</p>
+            <p className="text-primary-red font-bold mb-4">${Number(product.price).toFixed(2)}</p>
             <div className="flex gap-2">
               <button
                 onClick={() => handleEdit(product)}

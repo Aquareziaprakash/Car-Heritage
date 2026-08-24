@@ -15,7 +15,7 @@ Make sure your backend is deployed and running. You should have a URL like:
 
 ### Step 2: Set Environment Variable in Vercel
 
-1. **Go to Vercel Dashboard**: https://vercel.com/dashboard
+1. **Go to Vercel Dashboard**: https://vercel.321com/dashboard
 2. **Select your frontend project**
 3. **Go to**: Settings → Environment Variables
 4. **Click**: "Add New"

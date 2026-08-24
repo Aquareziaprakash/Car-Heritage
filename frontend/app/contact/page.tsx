@@ -58,9 +58,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-white font-semibold mb-2">Address</h3>
                     <p className="text-gray-300">
-                      123 Automotive Street<br />
-                      City, State 12345<br />
-                      United States
+                      Kirtipur Municipality, Ward No. 6<br />
+                      Kathmandu, Nepal
                     </p>
                   </div>
                 </div>
@@ -71,7 +70,7 @@ export default function ContactPage() {
                   <FaPhone className="text-primary-red text-2xl mt-1" />
                   <div>
                     <h3 className="text-white font-semibold mb-2">Phone</h3>
-                    <p className="text-gray-300">+1 (555) 123-4567</p>
+                    <p className="text-gray-300">+977 982-0092781</p>
                   </div>
                 </div>
               </div>
@@ -81,7 +80,7 @@ export default function ContactPage() {
                   <FaEnvelope className="text-primary-red text-2xl mt-1" />
                   <div>
                     <h3 className="text-white font-semibold mb-2">Email</h3>
-                    <p className="text-gray-300">info@carheritage.com</p>
+                    <p className="text-gray-300">carheritagenepal12@gmail.com</p>
                   </div>
                 </div>
               </div>

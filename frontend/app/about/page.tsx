@@ -73,7 +73,7 @@ export default function AboutPage() {
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Our Story</h2>
               <div className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20">
                 <p className="text-gray-300 leading-relaxed whitespace-pre-line">
-                  {aboutData.companyHistory || 'Our company history will be displayed here.'}
+                  {aboutData.companyHistory || 'Car Heritage Enterprises Pvt. Ltd. is a Nepal-registered private limited company providing automobile workshop, customization, and spare-parts services in Kathmandu.'}
                 </p>
               </div>
             </motion.section>
@@ -121,23 +121,31 @@ export default function AboutPage() {
           </div>
 
           {/* Certificate */}
-          {aboutData?.certificateImage && (
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-16"
-            >
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Company Registration</h2>
-              <div className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20">
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Company Registration</h2>
+            <div className="bg-primary-metallic p-4 sm:p-6 md:p-8 rounded-lg border border-primary-red/20">
+              <div className="text-gray-300 leading-relaxed space-y-2 mb-6">
+                <p><span className="text-white font-semibold">Legal name:</span> Car Heritage Enterprises Pvt. Ltd.</p>
+                <p><span className="text-white font-semibold">Registration No.:</span> 381366/82/83</p>
+                <p><span className="text-white font-semibold">Date of incorporation:</span> 19 December 2025 (2082/09/04)</p>
+                <p><span className="text-white font-semibold">PAN:</span> 622506836</p>
+                <p><span className="text-white font-semibold">Registered office:</span> Kirtipur Municipality, Ward No. 6, Kathmandu, Nepal</p>
+                <p><span className="text-white font-semibold">Promoters / directors:</span> Santosh Kumar Pathak, Abhiral Acharya</p>
+              </div>
+              {aboutData?.certificateImage && (
                 <img
                   src={aboutData.certificateImage}
                   alt="Company Certificate"
                   className="max-w-full h-auto rounded-lg"
                 />
-              </div>
-            </motion.section>
-          )}
+              )}
+            </div>
+          </motion.section>
 
           {/* Owner Section */}
           {aboutData?.owner && (
@@ -158,10 +166,10 @@ export default function AboutPage() {
                 )}
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-xl sm:text-2xl font-bold text-primary-red mb-4">
-                    {aboutData.owner.name || 'Owner Name'}
+                    {aboutData.owner.name || 'Santosh Kumar Pathak'}
                   </h3>
                   <p className="text-gray-300 leading-relaxed whitespace-pre-line">
-                    {aboutData.owner.thoughts || 'Owner thoughts will be displayed here.'}
+                    {aboutData.owner.thoughts || 'Car Heritage is built to give every vehicle owner in Nepal access to professional workshop care, lawful customization, and quality parts — treating each car with the same care we would give our own.'}
                   </p>
                 </div>
               </div>

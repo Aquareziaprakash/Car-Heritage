@@ -215,19 +215,19 @@ const seedData = async () => {
     // Create about information
     const about = new About({
       companyHistory:
-        'Car Heritage was founded in 2010 with a vision to provide premium automobile care services. Starting as a small car wash facility, we have grown into a full-service automotive center offering everything from basic maintenance to complete custom modifications.\n\nOver the years, we have served thousands of satisfied customers and built a reputation for excellence in the automotive industry. Our commitment to quality and customer satisfaction has made us a trusted name in car care and customization.',
+        'Car Heritage Enterprises Pvt. Ltd. (कार हेरिटेज इन्टरप्राइजेज) is a private limited company registered with the Office of the Company Registrar, Nepal, on 19 December 2025 (2082/09/04). Registration No. 381366/82/83. Our registered office is at Kirtipur Municipality, Ward No. 6, Kathmandu.\n\nWe operate as a service and trade company focused on automobile care: vehicle workshop work (denting, painting, modifications, and engine service), lawful vehicle customization, conversion of petrol and diesel vehicles to electric power, and wholesale and retail of imported vehicle spare parts.',
       mission:
-        'To provide exceptional automobile care and customization services that exceed customer expectations while maintaining the highest standards of quality and professionalism.',
+        'To provide exceptional automobile care and customization services in Nepal that exceed customer expectations while maintaining the highest standards of quality and professionalism.',
       vision:
-        'To become the leading automotive service provider known for innovation, quality, and customer-centric approach in the industry.',
+        'To become a trusted automotive service provider in Nepal, known for quality workshop work, lawful customization, and customer-centric care.',
       values:
-        'Quality, Integrity, Customer Satisfaction, Innovation, and Professionalism are the core values that drive everything we do at Car Heritage.',
-      certificateImage: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800',
+        'Quality, Integrity, Customer Satisfaction, Innovation, and Professionalism are the core values that drive everything we do at Car Heritage Enterprises.',
+      certificateImage: '',
       owner: {
-        name: 'John Smith',
-        photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',
+        name: 'Santosh Kumar Pathak',
+        photo: '',
         thoughts:
-          'Car Heritage is more than just a business to me - it\'s a passion. I started this company because I believe every car owner deserves access to premium care and customization services. Our team is dedicated to making your automotive dreams come true, whether it\'s a simple wash or a complete transformation. We treat every vehicle as if it were our own, and that\'s what sets us apart.',
+          'Car Heritage is more than just a business — it is a commitment to professional automobile care in Nepal. We started this company so every car owner can access workshop services, lawful customization, and quality parts under one roof. We treat every vehicle as if it were our own, and that is what sets us apart.',
       },
     })
     await about.save()
