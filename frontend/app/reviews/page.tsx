@@ -7,6 +7,7 @@ import api from '@/lib/api'
 import { motion } from 'framer-motion'
 import { FaStar } from 'react-icons/fa'
 import toast from 'react-hot-toast'
+import axios, { AxiosError } from 'axios'
 
 interface Review {
   _id: string
@@ -63,7 +64,10 @@ export default function ReviewsPage() {
         console.error('Review saved but refresh failed:', refreshError)
       }
     } catch (error: unknown) {
-      const axiosError = error as { response?: { data?: { message?: string; error?: string } }; message?: string }
+      const axiosError = error as {
+        response?: { status?: number; data?: { message?: string; error?: string } }
+        message?: string
+      }
       const message =
         axiosError.response?.data?.message ||
         axiosError.response?.data?.error ||
@@ -130,11 +134,10 @@ export default function ReviewsPage() {
                       key={rating}
                       type="button"
                       onClick={() => setFormData({ ...formData, rating })}
-                      className={`text-2xl transition-transform ${
-                        rating <= formData.rating
-                          ? 'text-yellow-400'
-                          : 'text-gray-600'
-                      } hover:scale-110`}
+                      className={`text-2xl transition-transform ${rating <= formData.rating
+                        ? 'text-yellow-400'
+                        : 'text-gray-600'
+                        } hover:scale-110`}
                     >
                       <FaStar />
                     </button>
@@ -179,9 +182,8 @@ export default function ReviewsPage() {
                     {[...Array(5)].map((_, i) => (
                       <FaStar
                         key={i}
-                        className={`text-sm sm:text-base ${
-                          i < review.rating ? 'text-yellow-400' : 'text-gray-600'
-                        }`}
+                        className={`text-sm sm:text-base ${i < review.rating ? 'text-yellow-400' : 'text-gray-600'
+                          }`}
                       />
                     ))}
                   </div>
